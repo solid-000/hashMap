@@ -1,7 +1,12 @@
-const HashMap = function () {
-  let map = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
-  let loadFactor = 0.8;
+const HashMap = function (num, load) {
+  let map = new Array(num);
+  for (let i = 0; i < map.length; i++) {
+    map[i] = i;
+  }
+
+  let loadFactor = load;
   let capacity = map.length;
+  let loadLimit = Math.round(loadFactor * capacity);
 
   function hash(key) {
     let hashCode = 0;
@@ -23,6 +28,10 @@ const HashMap = function () {
     } else {
       map[index] = [key, value];
     }
+    if (length() >= loadLimit) {
+      doubleCapacity();
+      console.log("Load limit exceeded! Doubling map size.");
+    }
   }
 
   function get(key) {
@@ -30,9 +39,9 @@ const HashMap = function () {
     let index = hashCode % capacity;
 
     if (map[index][0] === key) {
-      console.log(map[index][1]);
+      return map[index][1];
     } else {
-      console.log(null);
+      return null;
     }
   }
 
@@ -41,9 +50,9 @@ const HashMap = function () {
     let index = hashCode % capacity;
 
     if (map[index][0] === key) {
-      console.log(true);
+      return true;
     } else {
-      console.log(false);
+      return false;
     }
   }
 
@@ -52,9 +61,9 @@ const HashMap = function () {
 
     if (map[index][0] === key) {
       map[index] = index;
-      console.log(true);
+      return true;
     } else {
-      console.log(false);
+      return false;
     }
   }
 
@@ -63,7 +72,7 @@ const HashMap = function () {
     for (let i = 0; i < map.length; i++) {
       if (map[i][0]) count++;
     }
-    console.log(count);
+    return count;
   }
 
   function clear() {
@@ -81,7 +90,7 @@ const HashMap = function () {
         result.push(map[i][0]);
       }
     }
-    console.log(result);
+    return result;
   }
 
   function values() {
@@ -91,7 +100,7 @@ const HashMap = function () {
         result.push(map[i][1]);
       }
     }
-    console.log(result);
+    return result;
   }
 
   function entries() {
@@ -101,11 +110,33 @@ const HashMap = function () {
         result.push([map[i][0], map[i][1]]);
       }
     }
-    console.log(result);
+    return result;
   }
 
   function print() {
     console.log(map);
+    console.log(
+      `Capacity: ${capacity}, LoadFactor: ${loadFactor}, CurrentLoadFactor: ${(
+        length() / capacity
+      ).toFixed(1)} LoadLimit: ${loadLimit}`
+    );
+    console.log(length());
+  }
+
+  function doubleCapacity() {
+    let temp = map;
+    map = new Array(temp.length * 2);
+    capacity = map.length;
+    loadLimit = Math.round(loadFactor * capacity);
+
+    for (let i = 0; i < map.length; i++) {
+      map[i] = i;
+    }
+    for (let i = 0; i < temp.length; i++) {
+      if (temp[i][0]) {
+        set(temp[i][0], temp[i][1]);
+      }
+    }
   }
 
   return {
@@ -123,8 +154,22 @@ const HashMap = function () {
   };
 };
 
-let newMap = new HashMap();
-newMap.set("game", "on");
-newMap.set("raiden", "solid");
+let test = new HashMap(12, 0.8);
 
-newMap.print();
+test.set("apple", "red");
+test.set("banana", "yellow");
+test.set("carrot", "orange");
+test.set("dog", "brown");
+test.set("elephant", "gray");
+test.set("frog", "green");
+test.set("grape", "purple");
+test.set("hat", "black");
+test.set("ice cream", "white");
+test.set("jacket", "blue");
+test.set("kite", "pink");
+test.set("lion", "golden");
+test.set("sacascasasddn", "silver");
+test.set("a", "pinsadk");
+test.set("aias", "pinsadk");
+
+test.print();
