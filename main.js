@@ -1,7 +1,7 @@
 const HashMap = function (num, load) {
   let map = new Array(num);
   for (let i = 0; i < map.length; i++) {
-    map[i] = i;
+    map[i] = [];
   }
 
   let loadFactor = load;
@@ -30,7 +30,7 @@ const HashMap = function (num, load) {
     }
     if (length() >= loadLimit) {
       doubleCapacity();
-      console.log("Load limit exceeded! Doubling map size.");
+      console.log(`Load limit exceeded! Doubling map size to ${capacity}.`);
     }
   }
 
@@ -60,7 +60,7 @@ const HashMap = function (num, load) {
     let index = hash(key) % capacity;
 
     if (map[index][0] === key) {
-      map[index] = index;
+      map[index] = [];
       return true;
     } else {
       return false;
@@ -78,7 +78,7 @@ const HashMap = function (num, load) {
   function clear() {
     for (let i = 0; i < map.length; i++) {
       if (map[i][0]) {
-        map[i] = i;
+        map[i] = [];
       }
     }
   }
@@ -118,9 +118,8 @@ const HashMap = function (num, load) {
     console.log(
       `Capacity: ${capacity}, LoadFactor: ${loadFactor}, CurrentLoadFactor: ${(
         length() / capacity
-      ).toFixed(1)} LoadLimit: ${loadLimit}`
+      ).toFixed(1)}, LoadLimit: ${loadLimit}, Keys: ${length()}`
     );
-    console.log(length());
   }
 
   function doubleCapacity() {
@@ -130,7 +129,7 @@ const HashMap = function (num, load) {
     loadLimit = Math.round(loadFactor * capacity);
 
     for (let i = 0; i < map.length; i++) {
-      map[i] = i;
+      map[i] = [];
     }
     for (let i = 0; i < temp.length; i++) {
       if (temp[i][0]) {
@@ -154,7 +153,7 @@ const HashMap = function (num, load) {
   };
 };
 
-let test = new HashMap(12, 0.8);
+let test = new HashMap(12, 0.75);
 
 test.set("apple", "red");
 test.set("banana", "yellow");
@@ -164,12 +163,22 @@ test.set("elephant", "gray");
 test.set("frog", "green");
 test.set("grape", "purple");
 test.set("hat", "black");
-test.set("ice cream", "white");
-test.set("jacket", "blue");
-test.set("kite", "pink");
-test.set("lion", "golden");
-test.set("sacascasasddn", "silver");
-test.set("a", "pinsadk");
-test.set("aias", "pinsadk");
+// test.set("ice cream", "white");
+// test.set("jacket", "blue");
+// test.set("kite", "pink");
+// test.set("lion", "golden");
+// test.set("sacascasasddn", "silver");
+// test.set("a", "pinsadk");
+// test.set("aias", "pinsadk");
+// test.set("jerry", "asd");
+// test.set("jericho", "asd");
+// test.set("theroy", "asd");
+// test.set("leroy", "asd");
+// test.set("nerd", "asd");
+// test.set("batman", "asd");
+// test.set("superman", "asd");
+// test.set("maharajaa", "asd");
+// test.set("aranikosss", "asd");
+// test.set("IamDAu12", "asd");
 
 test.print();
